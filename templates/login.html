@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Giriş Yap · Enerji Koçu{% endblock %}
+{% block main_class %}auth-page{% endblock %}
+
+{% block content %}
+  <p class="eyebrow">Tekrar hoş geldin</p>
+  <h1>Giriş Yap</h1>
+  <p class="subtitle">Günlük enerji analizine devam etmek için giriş yap.</p>
+
+  <div class="card">
+    <form method="POST" action="{{ url_for('login') }}">
+      <div class="field">
+        <label for="username">Kullanıcı Adı</label>
+        <input type="text" id="username" name="username" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="password">Şifre</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn">Giriş Yap</button>
+    </form>
+    <p class="form-footer">Hesabın yok mu? <a href="{{ url_for('register') }}">Kayıt ol</a></p>
+  </div>
+{% endblock %}
