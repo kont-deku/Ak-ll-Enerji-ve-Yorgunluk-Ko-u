@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Bugünkü Verilerin · Enerji Koçu{% endblock %}
+
+{% block content %}
+  <p class="eyebrow">{{ session.get('username', '') }} için günlük analiz</p>
+  <h1>Bugün nasıl geçti?</h1>
+  <p class="subtitle">Aşağıdaki bilgileri gir, enerji puanını ve önerilerini hemen görelim.</p>
+
+  <div class="card">
+    <form method="POST" action="{{ url_for('analyze') }}">
+
+      <div class="field">
+        <label for="sleep_hours">Uyku Süresi (saat)</label>
+        <div class="slider-row">
+          <input type="range" id="sleep_hours" name="sleep_hours" min="0" max="12" step="0.5" value="7"
+                 oninput="document.getElementById('sleep_val').textContent = this.value">
+          <span class="slider-value" id="sleep_val">7</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="water_amount">Su Tüketimi (litre)</label>
+        <div class="slider-row">
+          <input type="range" id="water_amount" name="water_amount" min="0" max="5" step="0.25" value="2"
+                 oninput="document.getElementById('water_val').textContent = this.value">
+          <span class="slider-value" id="water_val">2</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="phone_hours">Telefon Kullanımı (saat)</label>
+        <div class="slider-row">
+          <input type="range" id="phone_hours" name="phone_hours" min="0" max="12" step="0.5" value="3"
+                 oninput="document.getElementById('phone_val').textContent = this.value">
+          <span class="slider-value" id="phone_val">3</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Spor Yaptın mı?</label>
+        <div class="toggle-group">
+          <input type="radio" id="sport_yes" name="sport_status" value="1" checked>
+          <label for="sport_yes">Evet</label>
+          <input type="radio" id="sport_no" name="sport_status" value="0">
+          <label for="sport_no">Hayır</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="mood">Ruh Halin</label>
+        <select id="mood" name="mood" required>
+          <option value="çok_iyi">😄 Çok İyi</option>
+          <option value="iyi" selected>🙂 İyi</option>
+          <option value="normal">😐 Normal</option>
+          <option value="kötü">🙁 Kötü</option>
+          <option value="çok_kötü">😞 Çok Kötü</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn">Enerji Puanımı Hesapla</button>
+    </form>
+  </div>
+{% endblock %}
