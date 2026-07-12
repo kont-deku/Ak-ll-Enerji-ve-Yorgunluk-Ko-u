@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Sonuçların · Enerji Koçu{% endblock %}
+
+{% block content %}
+  <p class="eyebrow">{{ entry.entry_date }}</p>
+  <h1>İşte bugünkü enerji puanın</h1>
+  <p class="subtitle">Verilerine göre hesaplanan sonuç ve kişiye özel öneriler.</p>
+
+  <div class="card">
+    <div class="gauge-wrap">
+      <div class="gauge" style="--pct: {{ entry.energy_score }};">
+        <div class="gauge-score">
+          <div class="num">{{ entry.energy_score }}</div>
+          <div class="lbl">/ 100</div>
+        </div>
+      </div>
+      <span class="level-badge">{{ entry.energy_level }}</span>
+    </div>
+
+    <div class="grid-2">
+      <div class="history-item"><span class="date">😴 Uyku</span><span class="score">{{ entry.sleep_hours }} sa</span></div>
+      <div class="history-item"><span class="date">💧 Su</span><span class="score">{{ entry.water_amount }} L</span></div>
+      <div class="history-item"><span class="date">📱 Telefon</span><span class="score">{{ entry.phone_hours }} sa</span></div>
+      <div class="history-item"><span class="date">🏃 Spor</span><span class="score">{{ "Evet" if entry.sport_status else "Hayır" }}</span></div>
+    </div>
+
+    {% if previous %}
+      <p class="subtitle" style="margin-top:20px;">
+        Önceki kaydına göre puanın
+        {% if entry.energy_score > previous.energy_score %}
+          <span style="color: var(--calm)">{{ entry.energy_score - previous.energy_score }} puan arttı 📈</span>
+        {% elif entry.energy_score < previous.energy_score %}
+          <span style="color: var(--danger)">{{ previous.energy_score - entry.energy_score }} puan azaldı 📉</span>
+        {% else %}
+          değişmedi.
+        {% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+  {% if recommendations %}
+    <h2 class="section-title">Sana özel öneriler</h2>
+    <ul class="recommendations">
+      {% for tip in recommendations %}
+        <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <a href="{{ url_for('index') }}" class="btn secondary" style="margin-top:32px;">Bugüne dön</a>
+{% endblock %}
